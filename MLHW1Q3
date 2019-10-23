@@ -1,0 +1,123 @@
+#https://colab.research.google.com/drive/1y4x1C0Kr5SVX5f0EMF-7h6Lm_DyCm3AA#scrollTo=MNC1y1p8l9vK
+
+from keras.datasets import mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
+#Create a list for each number to reside in
+list0 = []
+list1 = []
+list2 = []
+list3 = []
+list4 = []
+list5 = []
+list6 = []
+list7 = []
+list8 = []
+list9 = []
+
+#sort the pictures by label to be averaged later
+for x in range(len(train_images)):
+    if train_labels[x] == 0:
+        list0.append(train_images[x])
+    elif train_labels[x] == 1:
+        list1.append(train_images[x])
+    elif train_labels[x] == 2:
+        list2.append(train_images[x])
+    elif train_labels[x] == 3:
+        list3.append(train_images[x])
+    elif train_labels[x] == 4:
+        list4.append(train_images[x])
+    elif train_labels[x] == 5:
+        list5.append(train_images[x])
+    elif train_labels[x] == 6:
+        list6.append(train_images[x])
+    elif train_labels[x] == 7:
+        list7.append(train_images[x])
+    elif train_labels[x] == 8:
+        list8.append(train_images[x])
+    elif train_labels[x] == 9:
+        list9.append(train_images[x])
+        
+
+#average and print
+label_0 = np.mean(list0, axis = 0)
+label_0
+
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list1, axis = 0)
+label_0
+
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list2, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list3, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list4, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list5, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list6, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list7, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list8, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
+
+label_0 = np.mean(list9, axis = 0)
+label_0
+
+ 
+plt.figure(figsize=(4, 4))
+plt.imshow(label_0)
+plt.show()
