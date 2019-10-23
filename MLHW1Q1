@@ -1,0 +1,64 @@
+#https://colab.research.google.com/drive/1V9N71MLTv9NZAHTJslq2RGt1PlU39SrD#scrollTo=flBntrzIlQPw
+from mpl_toolkits import mplot3d
+
+%matplotlib inline
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+
+def f(x, y):
+    return x ** 2 + y ** 2
+
+x = np.linspace(-6, 6, 30)
+y = np.linspace(-6, 6, 30)
+
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.contour3D(X, Y, Z, 50, cmap='binary')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z');
+
+xmin, ymin = np.unravel_index(np.argmin(Z), Z.shape)
+
+localMin = (X[xmin,ymin], Y[xmin,ymin], Z.min())
+Amin = np.array([localMin]*4)
+
+#plot the Minimum
+ax.plot(Amin[:,0], Amin[:,1], Amin[:,2], marker="o", ls="", c=cm.coolwarm(0.))
+ax.view_init(70, 35)
+fig
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+
+def f(x, y):
+    return -x ** 2 - y ** 2
+
+x = np.linspace(-6, 6, 30)
+y = np.linspace(-6, 6, 30)
+
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+fig2 = plt.figure()
+ax = plt.axes(projection='3d')
+ax.contour3D(X, Y, Z, 50, cmap='binary')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z');
+
+xmax, ymax = np.unravel_index(np.argmax(Z), Z.shape)
+localMax = (X[xmax, ymax], Y[xmax, ymax], Z.max())
+Amax = np.array([localMax]*4)
+
+#plot the Maximum
+ax.plot(Amax[:,0], Amax[:,1], Amax[:,2], marker="o", ls="", c=cm.coolwarm(1.))
+ax.view_init(-50, 85)
+fig2
