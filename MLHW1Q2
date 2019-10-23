@@ -1,4 +1,4 @@
-
+#https://colab.research.google.com/drive/1_UiRQ3WYkeq0DPEIpITnm3FBtzeNAFBn#scrollTo=wiaQMuE0l2Di
 
 %matplotlib inline
 from mpl_toolkits import mplot3d
