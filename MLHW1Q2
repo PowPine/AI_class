@@ -1,0 +1,71 @@
+
+
+%matplotlib inline
+from mpl_toolkits import mplot3d
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl.rc('axes', labelsize=14)
+mpl.rc('xtick', labelsize=12)
+mpl.rc('ytick', labelsize=12)
+
+import numpy as np
+np.random.seed(42)
+
+xs = 2 * np.random.rand(100, 1)
+ys = 4 + 3 * xs + np.random.rand(100, 1)
+zs = 4 * np.random.rand(100, 1)
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+plt.plot(xs, ys, "b.")
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.axis([0, 2, 0, 15])
+plt.show()
+
+# split the data into training and test sets
+# train set
+train_xs = xs[:80]
+train_ys = ys[:80]
+
+# test set
+test_xs = xs[80:]
+test_ys = ys[80:]
+
+# number of epochs
+epochs = 10
+# learning rate
+lr = 0.01
+
+# initial value for weight w and bias b
+w1 = np.random.randn(1)
+w2 = np.random.randn(1)
+b = np.zeros(1)
+
+for epoch in np.arange(epochs):
+  for i in np.arange(80):
+    y_pred = w1 * train_xs[i] + w2 * train_ys[i] + b
+    
+    grad_w1 = (y_pred - train_ys[i]) * train_xs[i]
+    grad_w2 = (y_pred - train_ys[i]) * train_xs[i]
+    grad_b = (y_pred - train_ys[i])
+    
+    w1 -= lr * grad_w1
+    w2 -= lr * grad_w2
+    b -= lr * grad_b
+    
+test_loss = 0
+for i in np.arange(20):
+  test_loss += 0.5 * (w1 * test_xs[i] + w2 * test_xs[i] + b - test_ys[i]) ** 2
+test_loss /= 20
+
+test_loss
+
+pred_ys = w1 * test_xs + w2 * test_ys + b
+
+plt.plot(test_xs, test_ys, "b.")
+plt.plot(test_xs, pred_ys, "r.") # predicted values
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.axis([0, 2, 0, 15])
+plt.show()
