@@ -1,0 +1,98 @@
+https://colab.research.google.com/drive/1WWzV6GJKsb1LO98s_B5yN2UwNIXIco2D#scrollTo=2b3lzY58r-ty
+
+from keras.datasets import cifar10
+
+(train_images, train_labels), (test_images, test_labels) = cifar10.load_data()
+
+class_names = ['airplan', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+
+import matplotlib.pyplot as plt
+
+index = 0
+image = train_images[index]
+
+index = 0
+image = train_images[index]
+
+len(test_images)
+
+label = train_labels[index, 0]
+label
+
+table = [[] for _ in range(10)]
+for i in range(len(train_images)):
+  label = train_labels[i, 0]
+  table[label].append(i)
+
+plt.figure(figsize=(15,15))
+for class_index in range(10):
+  for example_index in range(10):
+    plt.subplot(10, 10, class_index * 10 + example_index + 1)
+    plt.xticks([])
+    plt.yticks([])
+    if example_index == 0:
+      plt.ylabel(class_names[class_index], rotation=90)
+    plt.grid(False)
+    plt.imshow(train_images[table[class_index][example_index]], cmap=plt.cm.binary)
+plt.show()
+
+train_images = train_images.reshape((50000, 32, 32, 3)) / 255.0
+test_images = test_images.reshape((10000, 32, 32, 3)) / 255.0
+
+from keras import layers
+from keras import models
+
+model = models.Sequential()
+# conv layers
+# 1
+model.add(layers.Conv2D(64, (3, 3), activation='relu', input_shape=(32, 32, 3)))
+model.add(layers.MaxPooling2D(2, 2))
+# 2
+model.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D(2, 2))
+# 3
+model.add(layers.Conv2D(256, (3, 3), activation='relu'))
+model.add(layers.MaxPooling2D(2, 2))
+# dense layers
+model.add(layers.Flatten())
+model.add(layers.Dense(128, activation='relu'))
+model.add(layers.Dense(10, activation='softmax'))
+
+model.summary()
+
+from keras import optimizers
+
+model.compile(optimizer='adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['accuracy'])
+             
+epochs = 5
+history = model.fit(train_images, 
+                      train_labels, 
+                      epochs=epochs,  
+                      validation_data=(test_images, test_labels))
+                      
+acc = history.history['acc']
+val_acc = history.history['val_acc']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs = range(1, len(acc) + 1)
+
+# training and validation accuracy
+
+plt.plot(epochs, acc, 'bo', label='training acc')
+plt.plot(epochs, val_acc, 'b', label='validation acc')
+plt.title('training and validation accuracy')
+plt.legend()
+
+plt.figure()
+
+# training and validation loss
+
+plt.plot(epochs, loss, 'bo', label='training loss')
+plt.plot(epochs, val_loss, 'b', label='validation loss')
+plt.title('training and validation loss')
+plt.legend()
+
+plt.show()
