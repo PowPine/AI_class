@@ -1,0 +1,184 @@
+https://colab.research.google.com/drive/1dam0Hl06xHWQoQ28KCmTVCca3MWCUOo2#scrollTo=0telinqibhaf
+
+import tensorflow as tf
+from tensorflow import keras
+
+fashion_mnist = keras.datasets.fashion_mnist
+
+(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+               
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.figure(figsize=(10,10))
+indices = np.random.choice(np.arange(60000), size=25, replace=False)
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.imshow(train_images[i], cmap=plt.cm.binary)
+    plt.xlabel(class_names[train_labels[i]])
+plt.show()
+
+plt.figure()
+plt.imshow(train_images[0])
+plt.colorbar()
+plt.grid(False)
+plt.show()
+
+train_images = train_images / 255.0
+test_images = test_images / 255.0
+
+# set up the layers
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(2, activation=tf.nn.relu),
+    keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+# compile the model
+
+model.compile(optimizer='adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['acc'])
+
+# train the model
+epochs = 15
+history = model.fit(train_images, 
+                      train_labels, 
+                      epochs=epochs,  
+                      validation_data=(test_images, test_labels))
+                      
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+print('Test accuracy:', test_acc)
+
+history_dict = history.history
+loss_values = history_dict['loss']
+test_loss_values = history_dict['val_loss']
+epochs_range = range(1, epochs+1)
+
+plt.plot(epochs_range, loss_values, 'bo', label='Training loss')
+plt.plot(epochs_range, test_loss_values, 'ro', label='Test loss')
+plt.title('Training and test loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+
+acc_values = history_dict['acc']
+test_acc_values = history_dict['val_acc']
+
+#Underfit
+plt.plot(epochs_range, acc_values, 'bo', label='Training accuracy')
+plt.plot(epochs_range, test_acc_values, 'ro', label='Test accuracy')
+plt.title('Training and test accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(400, activation=tf.nn.relu),
+    keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+# compile the model
+
+model.compile(optimizer='adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['acc'])
+
+# train the model
+epochs = 15
+history = model.fit(train_images, 
+                      train_labels, 
+                      epochs=epochs,  
+                      validation_data=(test_images, test_labels))
+                      
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+print('Test accuracy:', test_acc)
+
+history_dict = history.history
+loss_values = history_dict['loss']
+test_loss_values = history_dict['val_loss']
+epochs_range = range(1, epochs+1)
+
+plt.plot(epochs_range, loss_values, 'bo', label='Training loss')
+plt.plot(epochs_range, test_loss_values, 'ro', label='Test loss')
+plt.title('Training and test loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+
+acc_values = history_dict['acc']
+test_acc_values = history_dict['val_acc']
+
+#Overfitting
+plt.plot(epochs_range, acc_values, 'bo', label='Training accuracy')
+plt.plot(epochs_range, test_acc_values, 'ro', label='Test accuracy')
+plt.title('Training and test accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(32, activation=tf.nn.relu),
+    keras.layers.Dropout(.3),
+    keras.layers.Dense(64, activation=tf.nn.relu),
+    keras.layers.Dropout(.3),
+    keras.layers.Dense(128, activation=tf.nn.relu),
+    keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+
+# compile the model
+
+model.compile(optimizer='adam',
+             loss='sparse_categorical_crossentropy',
+             metrics=['acc'])
+
+# train the model
+epochs = 15
+history = model.fit(train_images, 
+                      train_labels, 
+                      epochs=epochs,  
+                      validation_data=(test_images, test_labels))
+                      
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+print('Test accuracy:', test_acc)
+
+history_dict = history.history
+loss_values = history_dict['loss']
+test_loss_values = history_dict['val_loss']
+epochs_range = range(1, epochs+1)
+
+plt.plot(epochs_range, loss_values, 'bo', label='Training loss')
+plt.plot(epochs_range, test_loss_values, 'ro', label='Test loss')
+plt.title('Training and test loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+plt.show()
+
+acc_values = history_dict['acc']
+test_acc_values = history_dict['val_acc']
+
+#Good Fit
+plt.plot(epochs_range, acc_values, 'bo', label='Training accuracy')
+plt.plot(epochs_range, test_acc_values, 'ro', label='Test accuracy')
+plt.title('Training and test accuracy')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+plt.show()
